@@ -30,11 +30,12 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // mock data
         let profileController = TestCatalogViewController(servicesAssembly: servicesAssembly)
         let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
         let cartController = TestCatalogViewController(servicesAssembly: servicesAssembly)
-        let statisticsController = TestCatalogViewController(servicesAssembly: servicesAssembly)
+        let statisticsController = StatisticsViewController(servicesAssembly: servicesAssembly)
+        let navStatisticsController = UINavigationController(rootViewController: statisticsController)
 
         profileController.tabBarItem = profileTabBarItem
         catalogController.tabBarItem = catalogTabBarItem
@@ -45,7 +46,7 @@ final class TabBarController: UITabBarController {
             profileController,
             catalogController,
             cartController,
-            statisticsController
+            navStatisticsController
         ]
         selectedIndex = 3
         tabBar.isTranslucent = false
