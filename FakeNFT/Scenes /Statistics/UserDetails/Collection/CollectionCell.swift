@@ -9,23 +9,21 @@ import UIKit
 
 // MARK: - Class
 
-final class CollectionCell: UICollectionViewCell {
-    
+final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Private UI properties
+
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = .radius1
         imageView.layer.masksToBounds = true
         return imageView
     }()
-    
     private let likeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Statistics.SfSymbols.like
         imageView.tintColor = .ypLightGreyDay
         return imageView
     }()
-    
     private let ratingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -34,7 +32,6 @@ final class CollectionCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     private let star1ImageView = UIImageView()
     private let star2ImageView = UIImageView()
     private let star3ImageView = UIImageView()
@@ -43,7 +40,7 @@ final class CollectionCell: UICollectionViewCell {
     // TODO: Need to make real buttons
     private let likeButtonDummyView = UIView()
     private let cartButtonDummyView = UIView()
-    
+
     private let horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -53,7 +50,6 @@ final class CollectionCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     private let verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -62,14 +58,12 @@ final class CollectionCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     private let cartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Statistics.Images.iconCartEmpty
         imageView.tintColor = .ypBlackDay
         return imageView
     }()
-    
     private let nftNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -78,7 +72,6 @@ final class CollectionCell: UICollectionViewCell {
         label.font = .bodyBold
         return label
     }()
-    
     private let nftPriceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -87,95 +80,98 @@ final class CollectionCell: UICollectionViewCell {
         label.font = .caption3
         return label
     }()
-    
+
     // MARK: - Public properties
+
     var viewModel: NftModel? {
         didSet {
             generateMockCell()
         }
     }
-    
+
     var isLiked = false {
         didSet {
             likeImageView.tintColor = isLiked ? .ypRedUniversal : .ypLightGreyDay
         }
     }
-    
+
     var isInCart = false {
         didSet {
             cartImageView.image = isInCart ? Statistics.Images.iconCartDelete : Statistics.Images.iconCartEmpty
         }
     }
-    
+
     // MARK: - Inits
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - Configure TrackerCell UI Section
+
 private extension CollectionCell {
-    
+
     func configureUI() {
         configureViews()
         configureConstraints()
     }
-    
+
     func configureViews() {
         [nftNameLabel, nftPriceLabel].forEach { verticalStackView.addArrangedSubview($0) }
-        
+
         [verticalStackView, cartButtonDummyView].forEach { horizontalStackView.addArrangedSubview($0) }
-        
+
         [star1ImageView, star2ImageView, star3ImageView, star4ImageView, star5ImageView].forEach { object in
             object.image = Statistics.SfSymbols.iconStar
             object.tintColor = .ypLightGreyDay
             ratingStackView.addArrangedSubview(object)
         }
-        
+
         [nftImageView, likeButtonDummyView, likeImageView, ratingStackView, horizontalStackView, cartImageView
         ].forEach { object in
             object.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(object)
         }
     }
-    
+
     func configureConstraints() {
         NSLayoutConstraint.activate([
             nftImageView.topAnchor.constraint(equalTo: topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             nftImageView.widthAnchor.constraint(equalToConstant: .nftSize),
             nftImageView.heightAnchor.constraint(equalToConstant: .nftSize),
-            
+
             likeButtonDummyView.topAnchor.constraint(equalTo: nftImageView.topAnchor),
             likeButtonDummyView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
             likeButtonDummyView.widthAnchor.constraint(equalToConstant: .buttonHeight),
             likeButtonDummyView.heightAnchor.constraint(equalToConstant: .buttonHeight),
-            
+
             likeImageView.centerXAnchor.constraint(equalTo: likeButtonDummyView.centerXAnchor),
             likeImageView.centerYAnchor.constraint(equalTo: likeButtonDummyView.centerYAnchor),
             likeImageView.widthAnchor.constraint(equalToConstant: .iconSize2),
             likeImageView.heightAnchor.constraint(equalToConstant: .iconSize2),
-            
+
             ratingStackView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: .spacing8),
             ratingStackView.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
             ratingStackView.widthAnchor.constraint(equalToConstant: .ratingWidth),
             ratingStackView.heightAnchor.constraint(equalToConstant: .iconSize1),
-            
+
             horizontalStackView.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: .spacing4),
             horizontalStackView.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
             horizontalStackView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
-            
+
             verticalStackView.widthAnchor.constraint(equalToConstant: .ratingWidth),
             verticalStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: .buttonHeight),
-            
+
             cartButtonDummyView.widthAnchor.constraint(equalToConstant: .buttonHeight),
             cartButtonDummyView.heightAnchor.constraint(equalToConstant: .buttonHeight),
-            
+
             cartImageView.centerXAnchor.constraint(equalTo: cartButtonDummyView.centerXAnchor),
             cartImageView.centerYAnchor.constraint(equalTo: cartButtonDummyView.centerYAnchor),
             cartImageView.widthAnchor.constraint(equalToConstant: .iconSize2),
@@ -185,14 +181,15 @@ private extension CollectionCell {
 }
 
 // MARK: - Mock data
+
 private extension CollectionCell {
     func generateMockCell() {
         genegateMockRating()
         genegateMockNftImage()
         genegateMockName()
-        nftPriceLabel.text = Float.random(in: 1...3).priceFormatted
+        nftPriceLabel.text = Float.random(in: 10...50).priceFormatted
     }
-    
+
     func genegateMockRating() {
         switch Int.random(in: 1...5) {
         case 1:
@@ -207,11 +204,11 @@ private extension CollectionCell {
         case 5:
             [star1ImageView, star2ImageView, star3ImageView, star4ImageView, star5ImageView]
                 .forEach { $0.tintColor = .ypYellowUniversal }
-            
+
         default: break
         }
     }
-    
+
     func genegateMockName() {
         switch Int.random(in: 1...8) {
         case 1: nftNameLabel.text = "Archie"
@@ -225,7 +222,7 @@ private extension CollectionCell {
         default: break
         }
     }
-    
+
     func genegateMockNftImage() {
         switch Int.random(in: 1...5) {
         case 1: nftImageView.image = Statistics.Images.nft1

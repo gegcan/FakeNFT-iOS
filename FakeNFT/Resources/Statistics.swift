@@ -26,6 +26,7 @@ enum Statistics {
         static let backward = UIImage(systemName: "chevron.backward", withConfiguration: largeConfig)
 
         static let like = UIImage(systemName: "heart.fill")
+        static let placeholderNft = UIImage(systemName: "photo")
     }
 
     // MARK: - UI element's images
@@ -39,20 +40,21 @@ enum Statistics {
         static let nft3 = UIImage(named: "nft3")
         static let nft4 = UIImage(named: "nft4")
         static let nft5 = UIImage(named: "nft5")
-
-        static let avatar1 = UIImage(named: "avatar1")
-        static let avatar2 = UIImage(named: "avatar2")
-        static let avatar3 = UIImage(named: "avatar3")
     }
 
     // MARK: - UI element's labels
     enum Labels {
         static let tabBarStatistics = NSLocalizedString("Tab.statistics", comment: "")
+
         static let sortingTitle = NSLocalizedString("statistics.sort.title", comment: "")
         static let sortingByName = NSLocalizedString("statistics.sort.byName", comment: "")
         static let sortingByRating = NSLocalizedString("statistics.sort.byRating", comment: "")
         static let sortingClose = NSLocalizedString("statistics.sort.close", comment: "")
         static let collectionTitle = NSLocalizedString("statistics.collection.title", comment: "")
         static let siteButtonTitle = NSLocalizedString("statistics.siteButton.title", comment: "")
+        static let arrowDown = "   ↓" // "   \u{2193}"
+        static let arrowUp = "   ↑" // "   \u{2191}"
+        static let triangleUp = "   △" // "   \u{25B3}"
+        static let triangleDown = "   ▽" // "   ▽\u{25BD}"
     }
 }

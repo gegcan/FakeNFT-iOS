@@ -9,22 +9,22 @@ final class TabBarController: UITabBarController {
 
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: ""),
-        image: UIImage(systemName: "person.circle.fill"),
+        image: Statistics.SfSymbols.iconProfile,
         tag: 0
     )
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
+        image: Statistics.SfSymbols.iconCatalog,
         tag: 1
     )
     private let cartTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.cart", comment: ""),
-        image: UIImage(systemName: "bag.fill"),
+        image: Statistics.SfSymbols.iconCart,
         tag: 2
     )
     private let statisticsTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.statistics", comment: ""),
-        image: UIImage(systemName: "flag.2.crossed.fill"),
+        title: Statistics.Labels.tabBarStatistics,
+        image: Statistics.SfSymbols.iconStatistics,
         tag: 3
     )
 
@@ -34,7 +34,13 @@ final class TabBarController: UITabBarController {
         let profileController = TestCatalogViewController(servicesAssembly: servicesAssembly)
         let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
         let cartController = TestCatalogViewController(servicesAssembly: servicesAssembly)
-        let statisticsController = StatisticsViewController(servicesAssembly: servicesAssembly)
+
+        // my epic
+
+        let statisticsController = StatisticsViewController(
+            servicesAssembly: servicesAssembly,
+            service: servicesAssembly.usersService
+        )
         let navStatisticsController = UINavigationController(rootViewController: statisticsController)
 
         profileController.tabBarItem = profileTabBarItem
