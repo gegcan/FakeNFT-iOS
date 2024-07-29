@@ -31,7 +31,7 @@ final class UserCell: UITableViewCell {
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.textAlignment = .natural
+        label.textAlignment = .left
         label.textColor = .ypBlackDay
         label.font = .headline3
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -122,10 +122,12 @@ private extension UserCell {
             nameLabel.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: .spacing16),
             nameLabel.heightAnchor.constraint(equalToConstant: .labelHeight2),
+            nameLabel.trailingAnchor.constraint(equalTo: ratingLabel.leadingAnchor, constant: -5),
 
             ratingLabel.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
             ratingLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -.spacing16),
-            ratingLabel.heightAnchor.constraint(equalToConstant: .labelHeight2)
+            ratingLabel.heightAnchor.constraint(equalToConstant: .labelHeight2),
+            ratingLabel.widthAnchor.constraint(equalToConstant: 30)
         ])
     }
 }
