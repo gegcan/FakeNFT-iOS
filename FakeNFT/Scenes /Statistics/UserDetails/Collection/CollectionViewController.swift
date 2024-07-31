@@ -25,12 +25,14 @@ final class CollectionViewController: UIViewController {
         button.contentMode = .scaleAspectFill
         return button
     }()
+    
     private let collectionLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
         label.textAlignment = .natural
         return label
     }()
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: cellID)
@@ -44,21 +46,25 @@ final class CollectionViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    
     private var profile: ProfileUpdate = ProfileUpdate(name: "", description: "", website: "", likes: []) {
         didSet {
             collectionView.reloadData()
         }
     }
+    
     private var order: OrderResultModel = OrderResultModel(nfts: [], id: "") {
         didSet {
             collectionView.reloadData()
         }
     }
+    
     private var state = NftsState.initial {
         didSet {
             stateDidChanged()
         }
     }
+    
     private let servicesAssembly: ServicesAssembly
     private let nftsService: NftsServiceProtocol
     private let nftService: NftServiceProtocol
@@ -169,6 +175,7 @@ private extension CollectionViewController {
         case .initial:
             assertionFailure("can't move to initial state")
         case .loading:
+            UIBlockingProgressHUD.show()
             loadLikes()
             loadOrder()
             if hasUserNfts {
@@ -178,7 +185,9 @@ private extension CollectionViewController {
             }
         case .data(let nftsResult):
             fetchNfts(from: nftsResult)
+            UIBlockingProgressHUD.dismiss()
         case .failed(let error):
+            UIBlockingProgressHUD.dismiss()
             presentNetworkAlert(errorDescription: error.localizedDescription) {
                 self.state = .loading
             }

@@ -19,6 +19,7 @@ final class UserCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -28,6 +29,7 @@ final class UserCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -37,6 +39,7 @@ final class UserCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private let counterLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -46,6 +49,7 @@ final class UserCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Statistics.SfSymbols.iconProfile
@@ -56,6 +60,7 @@ final class UserCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
     private let cellID = "UserCell"
 
     // MARK: - Inits

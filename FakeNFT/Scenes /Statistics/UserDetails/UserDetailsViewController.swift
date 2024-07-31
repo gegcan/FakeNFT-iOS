@@ -25,6 +25,7 @@ final class UserDetailsViewController: UIViewController {
         imageView.layer.masksToBounds = true
         return imageView
     }()
+    
     private let descLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 4
@@ -32,6 +33,7 @@ final class UserDetailsViewController: UIViewController {
         label.font = .caption2
         return label
     }()
+    
     private let siteButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .caption1
@@ -41,6 +43,7 @@ final class UserDetailsViewController: UIViewController {
         button.layer.masksToBounds = true
         return button
     }()
+    
     private let collectionLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold

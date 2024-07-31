@@ -18,12 +18,14 @@ final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
         imageView.layer.masksToBounds = true
         return imageView
     }()
+    
     private let likeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Statistics.SfSymbols.like
         imageView.tintColor = .ypLightGreyDay
         return imageView
     }()
+    
     private let ratingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -32,6 +34,7 @@ final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
     private let star1ImageView = UIImageView()
     private let star2ImageView = UIImageView()
     private let star3ImageView = UIImageView()
@@ -50,6 +53,7 @@ final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
     private let verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -58,12 +62,14 @@ final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
     private let cartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Statistics.Images.iconCartEmpty
         imageView.tintColor = .ypBlackDay
         return imageView
     }()
+    
     private let nftNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -72,6 +78,7 @@ final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
         label.font = .bodyBold
         return label
     }()
+    
     private let nftPriceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -135,11 +142,15 @@ final class CollectionCell: UICollectionViewCell, ReuseIdentifying {
 
 private extension CollectionCell {
     @objc func likeButtonCLicked() {
-        // метод кнопки лайка добавляет nft в избранное
+        isLiked.toggle()
+        let likes = isLiked ? profile.likes + [currentNftId] : profile.likes.filter { $0 != currentNftId }
+        updateProfileWith(new: likes)
     }
 
     @objc func cartButtonCLicked() {
-        // метод кнопки положить в корзину добавляет NFT в корзину
+        isInCart.toggle()
+        let nfts = isInCart ? order.nfts + [currentNftId] : order.nfts.filter { $0 != currentNftId }
+        updateOrderWith(new: nfts)
     }
 
     func generateRating(rating: Int) {

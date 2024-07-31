@@ -27,6 +27,7 @@ final class StatisticsViewController: UIViewController {
         button.setImage(Statistics.Images.iconSort, for: .normal)
         return button
     }()
+    
     private let usersTableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -42,21 +43,25 @@ final class StatisticsViewController: UIViewController {
             usersTableView.reloadData()
         }
     }
+    
     private var isSortedByNameAscending = false {
         didSet {
             sortByName()
         }
     }
+    
     private var isSortedByRatingAscending = false {
         didSet {
             sortByRating()
         }
     }
+    
     private var state = StatisticsState.initial {
         didSet {
             stateDidChanged()
         }
     }
+    
     private var currentSortingState =
         SortingState(rawValue: UserDefaults.standard.statisticsSorting) ?? SortingState.byRatingDescending
     private let servicesAssembly: ServicesAssembly
