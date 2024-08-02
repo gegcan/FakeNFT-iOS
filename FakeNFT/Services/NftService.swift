@@ -1,33 +1,34 @@
+//
+//  NftService.swift
+//  FakeNFT
+//
+//  Created by Александр Гегешидзе on 29.07.2024.
+//
+
 import Foundation
 
-typealias NftCompletion = (Result<Nft, Error>) -> Void
+typealias NftsCompletion = (Result<[NftModel], Error>) -> Void
 
-protocol NftService {
-    func loadNft(id: String, completion: @escaping NftCompletion)
+protocol NftsServiceProtocol {
+    func loadNfts(completion: @escaping NftsCompletion)
 }
 
-final class NftServiceImpl: NftService {
+final class NftsServiceImpl: NftsServiceProtocol {
 
     private let networkClient: NetworkClient
-    private let storage: NftStorage
 
-    init(networkClient: NetworkClient, storage: NftStorage) {
-        self.storage = storage
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
 
-    func loadNft(id: String, completion: @escaping NftCompletion) {
-        if let nft = storage.getNft(with: id) {
-            completion(.success(nft))
-            return
-        }
+    func loadNfts(completion: @escaping NftsCompletion) {
 
-        let request = NFTRequest(id: id)
-        networkClient.send(request: request, type: Nft.self) { [weak storage] result in
+        let request = NftsRequest()
+
+        networkClient.send(request: request, type: [NftModel].self, completionQueue: .main) { result in
             switch result {
-            case .success(let nft):
-                storage?.saveNft(nft)
-                completion(.success(nft))
+            case .success(let nfts):
+                completion(.success(nfts))
             case .failure(let error):
                 completion(.failure(error))
             }
